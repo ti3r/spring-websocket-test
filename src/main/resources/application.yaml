@@ -1,0 +1,6 @@
+spring:
+  prifiles:
+    active: Dev
+    
+server:
+  port: 8080

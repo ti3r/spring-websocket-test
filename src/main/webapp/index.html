@@ -1,0 +1,49 @@
+<!DOCTYPE html">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Prueba para web sockets</title>
+</head>
+<body>
+	<div>
+		<label for="url">Web Socket Server url: </label>
+		<input type="text" name="url" id="url" value="ws://localhost:8080" />
+	</div>
+	
+	<div>
+	<label for="text">Message: </label>
+	<input type="text" name="text" id="text" />
+	</div>
+	<div>
+		<button type="button" onclick="sendMessage();" >Send Message</button>
+		<button type="button" onclick="closeSocket();" >Close Socket</button>
+	</div>
+	<hr /> 
+	<div>
+		<label for="text-area">Messages Received:</label>
+		<br/>
+		<textArea id="text-area" cols="100" rows="25"></textArea>
+	</div>
+</body>
+<script>
+	var socket = new WebSocket('ws://localhost:8080/app')
+	var area = document.getElementById('text-area');
+	var txt = document.getElementById('text');
+	
+	socket.onmessage = function(msgEvt){
+		area.value = area.value + msgEvt.data + "\n";
+	}
+	
+	socket.onclose = function(){
+		area.value = area.value + "Socket has been closed!!!!\n";
+	}
+	
+	function sendMessage(){
+		socket.send(txt.value);
+		txt.value = "";
+	}
+	function closeSocket(){
+		socket.close();
+	}
+</script>
+</html>
